@@ -1,0 +1,93 @@
+openapi: 3.0.0
+info: 
+  title: Crowdy Project
+  version: 1.0.0
+servers: 
+  - url: http://localhost:5000
+
+paths:
+  /api/health:
+    get:
+      summary: API For health checking.
+      responses:
+        '200':
+          description: OK
+          content:
+            applicatioin/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+                    example: Healthy
+  /api/locations:
+    get:
+      summary: Returns Location Information List.
+      parameters:
+        - name: latitude
+          in: query
+          required: true
+          schema:
+            items:
+              type: number
+              example: 30
+        - name: longitude
+          in: query
+          required: true
+          schema:
+            items:
+              type: number
+              example: 120
+        - name: category
+          in: query
+          required: true
+          schema:
+            items:
+              type: string
+              example: 'starbucks'
+        - name: zoom
+          in: query
+          schema:
+            items:
+              type: number
+              example: 15
+      responses:
+        '200': 
+          description: OK
+          content:
+            applicatioin/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: string
+                  locationInfoList:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        address:
+                          type: string
+                        latitude:
+                          type: string
+                        longitude:
+                          type: string
+                        nowStatus:
+                          type: string
+                        link:
+                          type: string
+                        phonenumber:
+                          type: string
+                        live:
+                          type: string
+                        allStatus:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              time:
+                                type: number
+                              status:
+                                type: string

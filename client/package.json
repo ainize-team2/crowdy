@@ -13,8 +13,11 @@
     "@material-ui/core": "latest",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.47",
+    "@material-ui/styles": "^4.9.10",
+    "@turf/turf": "^5.1.6",
     "clsx": "latest",
     "lodash": "^4.17.15",
+    "mapbox-gl": "^1.9.1",
     "react": "latest",
     "react-dom": "latest",
     "react-scripts": "latest",
@@ -32,5 +35,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {}
 }

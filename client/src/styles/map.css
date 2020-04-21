@@ -1,0 +1,135 @@
+.marker {
+  width: 40px;
+  height: 50px;
+  cursor: pointer; 
+}
+
+.marker img {
+  width: 100%;
+  height: 100%;
+}
+
+.mapboxgl-popup {
+  width: 323px;
+  height: fit-content;
+  max-width: 323px !important;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.mapboxgl-popup-content {
+  width: 323px;
+  height: fit-content;
+  padding: 24px;
+}
+
+.popup-inner, .middle {
+  display: flex;
+  flex-direction: column;
+  line-height: normal;
+}
+
+.popup-inner {
+  width: 100%;
+  height: fit-content;
+  font-family: 'Montserrat';
+  font-style: normal;
+}
+
+.top, .bottom {
+  display: flex;
+  flex-direction: row;
+}
+
+.top {
+  justify-content: space-between;
+  padding-bottom: 1rem;
+}
+
+.top div:first-child {
+  border-radius: 2px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #FFFFFF;
+  padding: 0 6px;
+}
+
+.top .crowded-0 {
+  background: #B4B4B4;
+}
+
+.top .crowded-1 {
+  background: #44D7B6;
+}
+
+.top .crowded-2 {
+  background: #F4C84F;
+}
+
+.top .crowded-3 {
+  background: #E02020;
+}
+
+.top .live {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: #ECECEC;
+  width: 49px;
+  height: 20px;
+  color: #E02020;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.top .live .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 10px;
+  margin-right: 4px;
+  background: #E02020;
+}
+
+.middle div {
+  color: #1A1B1F;
+}
+
+.middle div:first-child {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  padding-bottom: 8px;
+}
+
+.middle div:nth-child(2) {
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 20px;
+  padding-bottom: 8px;
+}
+
+.middle div:last-child {
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  opacity: 0.6;
+}
+
+.bottom a {
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  color: #854CFF;
+}
+
+.bottom a:last-child {
+  margin-left: 1.2rem;
+}
+
+.mapboxgl-popup-tip {
+  display: none;
+}
