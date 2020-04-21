@@ -3,7 +3,7 @@ info:
   title: Crowdy Project
   version: 1.0.0
 servers: 
-  - url: http://localhost:5000
+  - url: http://localhost
 
 paths:
   /api/health:
@@ -45,12 +45,6 @@ paths:
             items:
               type: string
               example: 'starbucks'
-        - name: zoom
-          in: query
-          schema:
-            items:
-              type: number
-              example: 15
       responses:
         '200': 
           description: OK

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import _ from 'lodash';
 import Logger from '../common/logger';
 import * as types from '../common/types';
 
@@ -7,18 +8,23 @@ const GOOGLE_URL = 'https://www.google.com';
 
 export default class GoogleMap {
   static validParams(category: string, latitude: number, longitude: number, zoom: number) {
-    if (!(category.length !== 0 && latitude >= -90 && latitude <= 90
-      && longitude >= -180 && longitude <= 180 && zoom !== NaN)) {
+    if (!(category.length !== 0 && ((latitude >= -90 && latitude <= 90) || latitude === -200)
+      && ((longitude >= -180 && longitude) || longitude === -200) <= 180 && zoom !== NaN)) {
       throw new Error('invalid params');
     }
   }
 
   static async getLocationInfoList(
-    category: string, latitude: number, longitude: number, zoom: number = 15,
+    category: string, latitude: number = -200, longitude: number = -200, zoom: number = 15,
   ) {
     try {
       GoogleMap.validParams(category, latitude, longitude, zoom);
-      const url = encodeURI(`${GOOGLE_URL}/maps/search/${category}/@${latitude},${longitude},${zoom}z?hl=en`);
+      let url;
+      if (latitude === -200 && longitude === -200) {
+        url = encodeURI(`${GOOGLE_URL}/maps/search/${category}?hl=en`);
+      } else {
+        url = encodeURI(`${GOOGLE_URL}/maps/search/${category}/@${latitude},${longitude},${zoom}z?hl=en`);
+      }
       const categorySearch = await axios(url);
       // Get Name, Address, Latitude, Longitude
       const parseResult = GoogleMap.parseBody(categorySearch.data);
@@ -37,8 +43,8 @@ export default class GoogleMap {
           ...statusInfo[idx],
         });
       }
-
-      return result;
+      const locationInfoList = _.uniqBy(result, (val) => `${val.longitude},${val.latitude}`);
+      return JSON.parse(JSON.stringify(locationInfoList));
     } catch (error) {
       log.error(`[-] failed to get location list - ${error}`);
       throw error;
@@ -64,7 +70,7 @@ export default class GoogleMap {
       const coordinate = placeInfo.substring(coordinateIdx, placeInfo.indexOf(']', coordinateIdx)).split(',');
       const link = `${GOOGLE_URL}/maps/search/${address}/@${coordinate[1]},${coordinate[0]},${15}z`;
       const directions = `${GOOGLE_URL}/maps/dir/?api=1&destination=${address}`;
-      
+
       result.push({
         name,
         address,

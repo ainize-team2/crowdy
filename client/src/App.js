@@ -13,6 +13,8 @@ import ToggleIcon from "./images/icon-toggle.svg";
 
 import "./styles/main.css";
 
+import TextLoop from "react-text-loop";
+
 // material-ui
 import CssBaseline from "@material-ui/core/CssBaseline";
 import LinearProgress from "@material-ui/core/LinearProgress";
@@ -88,10 +90,10 @@ function LocationSnackbar(props) {
   );
 }
 
-const getLocations = (category, latitude, longitude, zoom) => {
+const getLocations = (category, latitude, longitude) => {
   return new Promise((resolve, reject) => {
     fetch(
-      `/api/locations?category=${category}&latitude=${latitude}&longitude=${longitude}&zoom=${zoom}`
+      `/api/locations?category=${category}&latitude=${latitude}&longitude=${longitude}`
     )
       .then((res) => res.json())
       .then((locations) => resolve(locations));
@@ -104,7 +106,6 @@ export default function App() {
   const [data, setData] = useState({ locations: [] });
   const { latitude, longitude, error } = usePosition(false);
   const mapCoords = useRef({ lat: latitude, lng: longitude });
-  const zoom = useRef(0);
 
   // for snackbar
   const [snackbarOpen, setSnackbarOpen] = React.useState(false);
@@ -219,7 +220,6 @@ export default function App() {
         categories[category.current].name,
         mapCoords.current.lat,
         mapCoords.current.lng,
-        zoom.current
       )
     );
     if (category.current === 0) {
@@ -228,7 +228,6 @@ export default function App() {
           "Grocery store",
           mapCoords.current.lat,
           mapCoords.current.lng,
-          zoom.current
         )
       );
     }
@@ -296,16 +295,35 @@ export default function App() {
         <div className="hero section">
           <div className="container">
             <h1 className="typography">
-              Find supermarkets near you that are not crowded! Based on{" "}
-              <a
-                className="link"
-                href="https://support.google.com/business/answer/6263531?hl=en"
+              Find{" "}
+              <TextLoop
+                className="textLoop"
+                interval={5000}
+                mask={true}
+                adjustingSpeed={200}
               >
-                popular times data*
-              </a>{" "}
-              from Google Maps
+                <span className="_0">supermarkets </span>
+                <span className="_1">shopping malls </span>
+                <span className="_2">restaurants </span>
+                <span className="_3">cafes </span>
+                <span className="_4">hospitals </span>
+                <span className="_5">pharmacies </span>
+                <span className="_6">banks </span>
+              </TextLoop>{" "}
+              near you that are not crowded!
+              <h2>
+                Based on{" "}
+                <a
+                  className="link"
+                  href="https://support.google.com/business/answer/6263531?hl=en"
+                >
+                  popular times data*
+                </a>
+                <br/>
+                from Google Maps
+              </h2>
             </h1>
-            <h2
+            <h4
               className="subtitle"
               align="left"
               color="textSecondary"
@@ -313,7 +331,7 @@ export default function App() {
             >
               * Data might not be 100% accurate as it is obtained via web
               scraping
-            </h2>
+            </h4>
             <LocationSnackbar
               snackbarOpen={snackbarOpen}
               setSnackbarOpen={setSnackbarOpen}
@@ -443,7 +461,6 @@ export default function App() {
           day={day}
           time={time}
           userGps={{ latitude, longitude }}
-          zoom={zoom}
           mapCoords={mapCoords}
           loading={loading}
           setLoading={setLoading}

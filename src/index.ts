@@ -19,15 +19,15 @@ app.get('/api/health', (req, res) => {
 });
 
 app.get('/api/locations', async (req, res) => {
-  const latitude = Number(req.query.latitude);
-  const longitude = Number(req.query.longitude);
+  const latitude = (req.query.latitude) ? Number(req.query.latitude) : undefined;
+  const longitude = (req.query.longitude) ? Number(req.query.longitude) : undefined;
   const category = String(req.query.category);
-  const zoom = Number(req.query.zoom);
-
+  log.debug(`[+] request to get locations <category: ${category} latitude: ${latitude}, longitude: ${longitude}>`);
   try {
     const locationInfoList = await GoogleMap.getLocationInfoList(
-      category, latitude, longitude, zoom,
+      category, latitude, longitude,
     );
+    log.debug(`[+] succeeded to get locations <category: ${category} latitude: ${latitude}, longitude: ${longitude}>`);
     res.send({ statusCode: '0', locationInfoList });
   } catch (error) {
     log.error(`[-] failed </api/locations> - ${error}`);
@@ -44,5 +44,5 @@ app.get('*', (_, res) => {
 });
 
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 80;
 server.listen(port, () => log.info(`Crowdy app listening on port ${port}!`));

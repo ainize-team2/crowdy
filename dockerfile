@@ -1,18 +1,24 @@
 FROM node:10.0.0-alpine AS build
 
 ADD ./client /client
-WORKDIR /client
+ADD ./package.json /package.json
+ADD ./tsconfig.json /tsconfig.json
+ADD ./src /src
 RUN npm install
-RUN npm run build
+RUN npm install -g typescript
+RUN npm run heroku-postbuild
+RUN tsc
 
 FROM node:10.0.0-alpine
 
 RUN mkdir /server
-RUN mkdir /client
-ADD ./src /server/src
+RUN mkdir /server/client
 ADD ./package.json /server/package.json
-COPY --from=build /client/build /client/build
+ADD ./swagger.yaml /server/swagger.yaml
+COPY --from=build /client /server/client
+COPY --from=build /dist /server/src
 WORKDIR /server
 RUN npm install --only=prod
 
-CMD ["npm", "start"]
+EXPOSE 80
+CMD ["node", "./src/index.js"]
