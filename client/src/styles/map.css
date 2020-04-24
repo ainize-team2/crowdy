@@ -28,6 +28,12 @@
   line-height: normal;
 }
 
+.popup-inner .middle img {
+  width: 18.2px;
+  height: 16px;
+  margin-right: 4px;
+}
+
 .popup-inner {
   width: 100%;
   height: fit-content;
@@ -42,7 +48,7 @@
 
 .top {
   justify-content: space-between;
-  padding-bottom: 1rem;
+  padding-bottom: 12px;
 }
 
 .top div:first-child {
@@ -93,6 +99,10 @@
   background: #E02020;
 }
 
+.middle {
+  padding-bottom: 22px;
+}
+
 .middle div {
   color: #1A1B1F;
 }
@@ -105,16 +115,18 @@
 }
 
 .middle div:nth-child(2) {
+  display: flex;
+  align-items: center;
   font-weight: normal;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 20px;
-  padding-bottom: 8px;
+  padding-bottom: 10px;
 }
 
 .middle div:last-child {
   font-weight: normal;
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 14px;
+  line-height: 20px;
   opacity: 0.6;
 }
 
@@ -127,9 +139,106 @@
 }
 
 .bottom a:last-child {
-  margin-left: 1.2rem;
+  margin-left: 45px;
 }
 
 .mapboxgl-popup-tip {
   display: none;
+}
+
+.attribWrapper {
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  background-color: #fff8;
+  padding: 0 4px;
+}
+
+.attribWrapper a {
+  color: #1A1B1F;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 400;
+}
+
+.attribWrapper a:hover {
+  color: #7586b9;
+}
+
+@media screen and (max-width: 663px) {
+  .mapboxgl-popup {
+    width: 160px;
+    max-width: 160px !important;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+  }
+  
+  .mapboxgl-popup-content {
+    width: 160px;
+    padding: 12px;
+  }
+
+  .popup-inner .middle img {
+    width: 9px;
+    height: 8px;
+    margin-right: 2px;
+  }
+
+  .top {
+    padding-bottom: 6px;
+  }
+  
+  .top div:first-child {
+    border-radius: 1px;
+    font-size: 7px;
+    line-height: 10px;
+    padding: 0 3px;
+  }
+
+  .top .live {
+    width: 25px;
+    height: 10px;
+    font-size: 7px;
+    line-height: 10px;
+  }
+  
+  .top .live .dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 5px;
+    margin-right: 2px;
+  }
+  
+  .middle {
+    padding-bottom: 11px;
+  }
+
+  .middle div:first-child {
+    font-size: 12px;
+    line-height: 14px;
+    padding-bottom: 4px;
+  }
+  
+  .middle div:nth-child(2) {
+    font-size: 7px;
+    line-height: 10px;
+    padding-bottom: 5px;
+  }
+  
+  .middle div:last-child {
+    font-size: 7px;
+    line-height: 10px;
+  }
+  
+  .bottom a {
+    font-size: 7px;
+    line-height: 12px;
+  }
+  
+  .bottom a:last-child {
+    margin-left: 22px;
+  }
+
+  .attribWrapper {
+    font-size: 7px;
+  }
 }

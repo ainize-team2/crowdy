@@ -24,6 +24,7 @@
     "@types/lodash": "^4.14.150",
     "@types/node": "^13.11.1",
     "@types/swagger-ui-express": "^4.1.2",
+    "@types/universal-analytics": "^0.4.4",
     "@types/yamljs": "^0.2.30",
     "analytics": "^0.3.1",
     "axios": "^0.19.2",
@@ -36,6 +37,7 @@
     "socket.io": "^2.3.0",
     "swagger-ui-express": "^4.1.4",
     "ts-node": "^8.8.2",
+    "universal-analytics": "^0.4.20",
     "winston": "^3.2.1",
     "yamljs": "^0.3.0"
   },

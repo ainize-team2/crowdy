@@ -113,11 +113,11 @@ header .container {
   font-weight: 500;
   line-height: 50px;
   width: 100%;
-  color: #6c6a8e;
+  color: #1A1B1F;
 }
 
 .map .searchWrapper input::placeholder {
-  color: #6c6a8e;
+  color: #A7A6BB;
 }
 
 .map .categoryWrapper {

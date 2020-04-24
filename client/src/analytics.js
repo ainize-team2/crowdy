@@ -1,14 +1,14 @@
-import Analytics from 'analytics'
-import googleAnalytics from '@analytics/google-analytics'
+import ReactGA from 'react-ga';
 
-const analytics = Analytics({
-  app: 'crowdy',
-  version: 1,
-  plugins: [
-    googleAnalytics({
-      trackingId: 'UA-120727651-10',
-    }),
-  ]
-})
+const trackingId = "UA-164242824-3"; 
+const CHECK_USE_TIME = 30000;
+ReactGA.initialize(trackingId);
 
-export default analytics;
+setTimeout(() => {
+  ReactGA.event({
+    category: 'Used',
+    action: '30s'
+  })
+}, CHECK_USE_TIME);
+
+export default ReactGA;
