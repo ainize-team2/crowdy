@@ -8,6 +8,7 @@ import LegendImg from "./images/legend.svg";
 import GitHubIcon from "./images/icon-git-hub.svg";
 import AinizeIcon from "./images/icon-ainize.svg";
 import SearchIcon from "./images/icon-search.svg";
+import SearchDisabledIcon from './images/icon-search-disabled.svg';
 import ToggleIcon from "./images/icon-toggle.svg";
 
 import "./styles/main.css";
@@ -113,7 +114,9 @@ export default function App() {
   // for snackbar
   const [snackbarOpen, setSnackbarOpen] = React.useState(false);
 
+  // for search
   const [searchText, setSearchText] = useState("");
+  const [searchLoading, setSearchLoading] = useState(false);
 
   // for category
   const category = useRef(0);
@@ -121,9 +124,11 @@ export default function App() {
   const [time, setTime] = useState(null);
   const [dayAnchorEl, setDayAnchorEl] = useState(null);
   const [timeAnchorEl, setTimeAnchorEl] = useState(null);
+  const [categoryLoading, setCategoryLoading] = useState(false);
 
   // filter no time data
   const [excludeNoTimeData, setExcludeNoTimeData] = useState(false);
+
   useEffect(() => {
     if (excludeNoTimeData) {
       setData({ locations: filterDayTime(data.locations) });
@@ -175,6 +180,7 @@ export default function App() {
   };
 
   const handleSearch = async () => {
+    setSearchLoading(true);
     const query = searchText;
     category.current = 0;
     setSearchText("");
@@ -187,7 +193,10 @@ export default function App() {
       mapCoords.current.lat,
       mapCoords.current.lng
     );
-    if (!result) return;
+    if (!result) {
+      setSearchLoading(false);
+      return;
+    }
 
     // remove duplicates
     const data = {
@@ -201,6 +210,7 @@ export default function App() {
     allData.current = JSON.parse(JSON.stringify(data.locations));
 
     setData(data);
+    setSearchLoading(false);
   };
 
   const handleMapCoordsChange = async () => {
@@ -209,7 +219,9 @@ export default function App() {
 
   const handleCategoryChange = async (val) => {
     category.current = val;
+    setCategoryLoading(true);
     await fetchAndFilterData();
+    setCategoryLoading(false);
   };
 
   const fetchAndFilterData = async () => {
@@ -357,7 +369,8 @@ export default function App() {
           <div className="container">
             <div className="searchWrapper">
               <input
-                placeholder="Search"
+                placeholder={searchLoading ? "" : "Search"}
+                disabled={searchLoading}
                 value={searchText}
                 onChange={handleChangeText}
                 onKeyPress={(event) => {
@@ -367,8 +380,12 @@ export default function App() {
                   }
                 }}
               />
-              <button onClick={handleSearch}>
-                <img src={SearchIcon} />
+              {searchLoading && <div className="loaderContainer">
+                <i className="loader" />
+              </div>}
+              <button onClick={handleSearch} disabled={searchLoading}>
+                {searchLoading ? <img src={SearchDisabledIcon}/> 
+                  : <img src={SearchIcon} />}
               </button>
             </div>
 
@@ -378,13 +395,18 @@ export default function App() {
                   onClick={() => handleCategoryChange(item.val)}
                   key={index}
                 >
-                  <img
-                    src={
-                      category.current === item.val
-                        ? CategoryIcon.select[item.val]
-                        : CategoryIcon.unselect[item.val]
-                    }
-                  />
+                  {
+                    category.current === item.val && categoryLoading ? 
+                    <div className="loaderContainer">
+                      <i className="loader" />
+                    </div>
+                    : <img src={
+                          category.current === item.val
+                            ? CategoryIcon.select[item.val]
+                            : CategoryIcon.unselect[item.val]
+                        }
+                      />
+                  }
                 </button>
               ))}
             </div>

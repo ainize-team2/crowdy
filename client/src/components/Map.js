@@ -234,7 +234,7 @@ export const Map = ({
   }, [data, day, time]);
 
   const wrapperStyle = {
-    height: '500px'
+    height: '700px'
   };
 
   return (

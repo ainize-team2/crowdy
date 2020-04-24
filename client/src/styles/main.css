@@ -87,6 +87,62 @@ header .container {
   object-fit: fill;
 }
 
+.searchWrapper .loaderContainer {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+}
+
+.categoryWrapper .loaderContainer {
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  background-color: #E4E4E4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  background: transparent;
+  position: relative;
+  height: 16px;
+  width: 16px;
+  display: inline-block;
+  animation: around 5.4s infinite;
+}
+
+@keyframes around {
+  0% {
+    transform: rotate(0deg)
+  }
+  100% {
+    transform: rotate(360deg)
+  }
+}
+
+.loader::after, .loader::before {
+  content: "";
+  /* background: white; */
+  position: absolute;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  border-width: 2px;
+  border-color: #9190AE #9190AE transparent transparent;
+  border-style: solid;
+  border-radius: 20px;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  animation: around 0.7s ease-in-out infinite;
+}
+
+.loader::after {
+  animation: around 0.7s ease-in-out 0.1s infinite;
+  background: transparent;
+}
+
 .map .container {
   display: block;
   width: 100%;
@@ -122,6 +178,9 @@ header .container {
 
 .map .categoryWrapper {
   margin: 40px 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .map .categoryWrapper .categoryIcon {
@@ -136,6 +195,9 @@ header .container {
   margin: 0;
   margin-right: 20px;
   padding: 0;
+  display: flex;
+  width: 40px;
+  height: 40px;
 }
 
 .map .categoryWrapper button:last-child {
@@ -345,6 +407,9 @@ a:active {
     justify-content: center;
     padding-right: 5px;
     padding-bottom: 12px;
+  }
+  .map .categoryWrapper {
+    justify-content: center;
   }
   footer {
     justify-content: center;

@@ -166,6 +166,10 @@
 }
 
 @media screen and (max-width: 663px) {
+  .mapboxgl-map {
+    height: 500px !important;
+  }
+
   .mapboxgl-popup {
     width: 160px;
     max-width: 160px !important;
