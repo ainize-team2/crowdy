@@ -486,7 +486,7 @@ export default function App() {
           <img src={AinizeIcon} />
           POWERED BY AINIZE
         </a>
-        <a className="githubLink" onClick={onClickGithubLink} href="https://github.com/liayoo/crowdy">
+        <a className="githubLink" onClick={onClickGithubLink} href="https://github.com/ainize-team2/crowdy">
           <img src={GitHubIcon} />
           VISIT GITHUB
         </a>
