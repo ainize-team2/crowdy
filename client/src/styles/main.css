@@ -38,10 +38,24 @@ header .container {
   padding: 20px 50px;
 }
 
-.logo {
+header .logo {
   font-size: 27px;
   font-weight: 600;
   text-decoration: underline;
+}
+
+header .menu {
+  display: flex;
+  flex-direction: row;
+}
+
+header .menu a {
+  margin-right: 40px;
+  text-decoration: none;
+}
+
+header .menu a:last-child {
+  margin-right: 0;
 }
 
 .hero .container {
@@ -55,26 +69,26 @@ header .container {
 }
 
 .hero .typography .textLoop ._0 {
-  color: #FE798D;
+  color: #fe798d;
 }
 .hero .typography .textLoop ._1 {
-  color: #A452A2
+  color: #a452a2;
 }
 .hero .typography .textLoop ._2 {
-  color: #EE9B5B
+  color: #ee9b5b;
 }
 .hero .typography .textLoop ._3 {
-  color: #AA642F
+  color: #aa642f;
 }
 .hero .typography .textLoop ._4 {
-  color: #77C098
+  color: #77c098;
 }
 .hero .typography .textLoop ._5 {
-  color: #4EA49B
+  color: #4ea49b;
 }
 .hero .typography .textLoop ._6 {
-  color: #6F86C0
-} 
+  color: #6f86c0;
+}
 
 .hero .link {
   position: static;
@@ -97,7 +111,7 @@ header .container {
   width: 40px;
   height: 40px;
   border-radius: 40px;
-  background-color: #E4E4E4;
+  background-color: #e4e4e4;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -114,14 +128,15 @@ header .container {
 
 @keyframes around {
   0% {
-    transform: rotate(0deg)
+    transform: rotate(0deg);
   }
   100% {
-    transform: rotate(360deg)
+    transform: rotate(360deg);
   }
 }
 
-.loader::after, .loader::before {
+.loader::after,
+.loader::before {
   content: "";
   /* background: white; */
   position: absolute;
@@ -129,7 +144,7 @@ header .container {
   width: 100%;
   height: 100%;
   border-width: 2px;
-  border-color: #9190AE #9190AE transparent transparent;
+  border-color: #9190ae #9190ae transparent transparent;
   border-style: solid;
   border-radius: 20px;
   box-sizing: border-box;
@@ -169,11 +184,11 @@ header .container {
   font-weight: 500;
   line-height: 50px;
   width: 100%;
-  color: #1A1B1F;
+  color: #1a1b1f;
 }
 
 .map .searchWrapper input::placeholder {
-  color: #A7A6BB;
+  color: #a7a6bb;
 }
 
 .map .categoryWrapper {
@@ -248,6 +263,24 @@ header .container {
   font-weight: 500;
   letter-spacing: 1px;
   text-transform: uppercase;
+}
+
+.about .container {
+  margin-top: 80px;
+  margin-bottom: 350px;
+}
+
+.about .content {
+  padding-bottom: 15px;
+  max-width: 800px;
+}
+
+.about .content:last-child {
+  margin-bottom: 0;
+}
+
+.about .content a {
+  cursor: pointer;
 }
 
 footer {

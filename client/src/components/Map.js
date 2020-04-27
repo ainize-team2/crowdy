@@ -71,8 +71,8 @@ export const Map = ({
           "raster-tiles": {
             "type": "raster",
             "tiles": [
-              // "https://stamen-tiles.a.ssl.fastly.net/terrain/{z}/{x}/{y}.jpg"
-              "https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png"
+              "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
+              "https://b.tile.openstreetmap.org/{z}/{x}/{y}.png"
             ],
             "tileSize": 256,
           }

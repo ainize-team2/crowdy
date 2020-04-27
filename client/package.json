@@ -21,6 +21,7 @@
     "react": "latest",
     "react-dom": "latest",
     "react-ga": "^2.7.0",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "latest",
     "react-text-loop": "^2.3.0",
     "socket.io-client": "^2.3.0",
