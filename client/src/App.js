@@ -31,11 +31,11 @@ export default function App() {
         </Route>
       </Switch>
       <footer>
-        <a className="ainizeLink" href="https://ainize.ai">
+        <a className="ainizeLink" target="_blank" href="https://ainize.ai">
           <img src={AinizeIcon} />
           POWERED BY AINIZE
         </a>
-        <a className="githubLink" href="https://github.com/ainize-team2/crowdy">
+        <a className="githubLink" target="_blank" href="https://github.com/ainize-team2/crowdy">
           <img src={GitHubIcon} />
           VISIT GITHUB
         </a>

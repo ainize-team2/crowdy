@@ -3,7 +3,7 @@ info:
   title: Crowdy Project
   version: 1.0.0
 servers: 
-  - url: http://localhost
+  - url: https://crowdy.liayoo.endpoint.ainize.ai
 
 paths:
   /api/health:
@@ -71,6 +71,8 @@ paths:
                         nowStatus:
                           type: string
                         link:
+                          type: string
+                        directions:
                           type: string
                         phonenumber:
                           type: string

@@ -23,7 +23,7 @@ export default function Home() {
             </h4>
             <h4>
               Find more information about the original version of Crowdy:{" "}
-              <a>https://devpost.com/software/crowdy-8w1pvu</a>
+              <a target="_blank" href="https://devpost.com/software/crowdy-8w1pvu">https://devpost.com/software/crowdy-8w1pvu</a>
             </h4>
           </div>
           <div className="content">
@@ -36,7 +36,7 @@ export default function Home() {
               as you deploy an open-source!
             </h4>
             <h4>
-              Ainize Website: <a>https://ainize.ai </a>
+              Ainize Website: <a target="_blank" href="https://ainize.ai">https://ainize.ai</a>
             </h4>
           </div>
         </div>
