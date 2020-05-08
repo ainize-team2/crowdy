@@ -1,0 +1,160 @@
+.ainize .container,
+.about_hero .container {
+  text-align: center;
+  margin: 0px;
+  max-width: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.about_hero .container {
+  background-image: url("../images/about-hero.svg");
+  background-size: cover;
+  background-position-x: center;
+  background-position-y: bottom;
+  padding: 90px 120px 0px 120px;
+}
+
+.about_hero h1 {
+  margin-left: 60px;
+  margin-right: 60px;
+}
+
+.about_hero .quote {
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 80px 170px 0px 170px;
+}
+
+.about_hero .quote h3 {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 38px;
+  margin: 0;
+  color: #6c6aa4;
+}
+
+.about_hero .quote img {
+  height: 60px;
+  width: 60px;
+  object-fit: cover;
+  border-radius: 30px;
+}
+
+.about_hero .content {
+  max-width: 900px;
+}
+
+.about .container {
+  text-align: center;
+  padding: 90px 120px 0px 120px;
+}
+
+.about .container:last-child {
+  padding: 90px 120px 90px 120px;
+}
+
+.about a {
+  text-decoration: none;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0;
+}
+
+.ainize .container {
+  background-color: #f5f5f5;
+  padding: 120px;
+}
+
+.ainize .content {
+  max-width: 900px;
+}
+
+.ainize button {
+  margin-top: 20px;
+  width: 200px;
+  height: 60px;
+  background-color: #1a1b1f !important;
+  color: white;
+  font-size: 16px;
+}
+
+.ainize button:hover {
+  opacity: 0.9;
+}
+
+.ainize button:active,
+.ainize button:focus {
+  background-color: #1a1b1f !important;
+}
+
+@media screen and (max-width: 1088px) {
+  .about_hero .container {
+    padding: 80px 50px 0px 50px;
+  }
+}
+
+@media screen and (max-width: 948px) {
+  .about_hero .quote {
+    padding: 80px 100px 0px 100px;
+  }
+  .about_hero .quote h3 {
+    font-size: 22px;
+    line-height: 30px;
+  }
+}
+
+@media screen and (max-width: 663px) {
+  .about_hero .container {
+    padding: 50px 20px 0px 20px;
+  }
+  .about .container {
+    padding: 60px 20px 60px 20px;
+  }
+  .about .container:last-child {
+    padding: 0px 20px 60px 20px;
+  }
+  .about_hero .quote {
+    padding: 40px 80px 0px 80px;
+  }
+  .about_hero .quote h3 {
+    font-size: 16px;
+    line-height: 25px;
+  }
+  .about_hero .quote img {
+    height: 40px;
+    width: 40px;
+  }
+  .ainize button {
+    width: 130px;
+    height: 35px;
+    font-size: 9px;
+  }
+  .ainize .container {
+    padding: 60px;
+  }
+}
+
+@media screen and (max-width: 487px) {
+  .about_hero h1 {
+    font-size: 25px;
+    line-height: 35px;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .about_hero .container {
+    padding: 40px 20px 0px 20px;
+  }
+  .about_hero .quote h3 {
+    font-size: 12px;
+    line-height: 20px;
+  }
+  .about_hero .quote {
+    padding: 40px 55px 0px 55px;
+  }
+  .ainize .container {
+    padding: 40px;
+  }
+}

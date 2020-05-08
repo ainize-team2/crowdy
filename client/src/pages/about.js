@@ -4,13 +4,63 @@ import _ from "lodash";
 
 import analytics from "../analytics";
 
+import ProfileImage from "../images/profile.png";
+
+import "../styles/about.css";
+
 export default function Home() {
+  const onClickAinizeLink = () => {
+    analytics.event({
+      category: 'link',
+      action: 'ainize',
+    });
+  }
   useEffect(() => {
     analytics.ga("send", "pageview", "/about");
   });
   return (
     <main>
+      <div className="about_hero section">
+        <div className="container">
+          <div className="content">
+            <h1>
+              Join us to improve <br />
+              Crowdy
+            </h1>
+            <h4>
+              Hundreds of open-source projects or hackathon winning ideas with
+              great potential end up being forgotten in Github repositories. We
+              found Crowdy, a hackathon-winning project that has great potential
+              to help people globally. Powered by Ainize, we published the next
+              version of Crowdy with new features -- but there’s still plenty of
+              room for improvement.
+            </h4>
+          </div>
+          <div className="content quote">
+            <h3>
+              “To have another team, from another part of the world, build new
+              features for Crowdy is something really heartwarming to see."
+            </h3>
+            <h4>Andrew Lim, Author of Crowdy</h4>
+            <img src={ProfileImage} />
+          </div>
+        </div>
+      </div>
       <div className="about section">
+        <div className="container">
+          <div className="content">
+            <h2>How to join</h2>
+            <h4>
+              Fork this{" "}
+              <a target="_blank" href="https://github.com/ainize-team2/crowdy">
+                Github repo
+              </a>{" "}
+              to make your own version of Crowdy, or simply use our location
+              APIs in other interesting projects. And of course, pull requests
+              are always welcome!
+            </h4>
+          </div>
+        </div>
         <div className="container">
           <div className="content">
             <h2>What is Crowdy?</h2>
@@ -22,22 +72,30 @@ export default function Home() {
               COVID-19 Global Hackathon 1.0.
             </h4>
             <h4>
-              Find more information about the original version of Crowdy:{" "}
-              <a target="_blank" href="https://devpost.com/software/crowdy-8w1pvu">https://devpost.com/software/crowdy-8w1pvu</a>
+              <a
+                target="_blank"
+                href="https://devpost.com/software/crowdy-8w1pvu"
+              >
+                Find more information about the original version of Crowdy
+              </a>
             </h4>
           </div>
+        </div>
+      </div>
+      <div className="ainize section">
+        <div className="container">
           <div className="content">
-            <h2>Crowdy x Ainize</h2>
+            <h2>What is Ainize</h2>
             <h4>
-              Ainize team’s vision is to transform millions of open source code
-              into a scalable API service. Once you deploy your favorite
-              open-source project, it'll be served for everyone — a simple way
-              to contribute to the open-source community! Ainize is free as long
-              as you deploy an open-source!
+              Ainize is a serverless cloud platform that helps developers to
+              transform open-source projects into live services. To encourage
+              the creation of innovative projects, deploying public Github
+              repositories is free at Ainize. If your repo has a Dockerfile,
+              you're just one click away from free deployments!
             </h4>
-            <h4>
-              Ainize Website: <a target="_blank" href="https://ainize.ai">https://ainize.ai</a>
-            </h4>
+            <a target="_blank" href="https://ainize.ai">
+              <button onClick={onClickAinizeLink}>Visit Ainize Website</button>
+            </a>
           </div>
         </div>
       </div>

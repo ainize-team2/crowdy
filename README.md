@@ -1,3 +1,6 @@
+[![Run on Ainize](https://www.ainize.ai/static/images/run_on_ainize_button.svg)](https://ainize.web.app/redirect?git_repo=github.com/ainize-team2/crowdy)
+
+
 #BuildforCOVID19 Global Online Hackathon
 https://devpost.com/software/crowdy-8w1pvu
 

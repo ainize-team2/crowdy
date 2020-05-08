@@ -15,8 +15,8 @@ const server = new http.Server(app);
 // Serve static files from the React app
 app.use(express.static(path.join('client/build')));
 
-app.get('/api/health', (req, res) => {
-  res.send('Healthy');
+app.get('/healthz', (req, res) => {
+  res.sendStatus(200);
 });
 
 app.get('/api/locations', async (req, res) => {

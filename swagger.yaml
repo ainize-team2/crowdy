@@ -6,7 +6,7 @@ servers:
   - url: https://crowdy.liayoo.endpoint.ainize.ai
 
 paths:
-  /api/health:
+  /healthz:
     get:
       summary: API For health checking.
       responses:

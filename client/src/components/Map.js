@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { usePosition } from "use-position";
 import mapboxgl from 'mapbox-gl';
 import { point, center, featureCollection, distance } from '@turf/turf';
@@ -42,15 +42,21 @@ export const Map = ({
   const mapRef = useRef(null);
   const mapContainerRef = useRef(null);
   const { latitude, longitude, error } = usePosition(false);
+  const prevUserGps = useRef({ latitude, longitude });
   const timeoutRef = useRef(null);
+  const [mapLoading, setMapLoading] = useState(false);
 
   const moveEndHandler = (event) => {
     const coords = mapRef.current.getCenter();
-    mapCoords.current = { lat: coords.lat.toFixed(6), lng: coords.lng.toFixed(6) };
+    const newLat = coords.lat.toFixed(6);
+    const newLng = coords.lng.toFixed(6)
     if (!event.originalEvent && !event.geolocateSource) {
       // ignore moveend events triggered by 'flyTo' or 'fitBounds'
+      mapCoords.current = { lat: newLat, lng: newLng };
       return;
-    } else {
+    } else if (isOverThreshold(mapCoords.current.lat, newLat) || isOverThreshold(mapCoords.current.lng, newLng)) {
+      addLayerSpinner();
+      mapCoords.current = { lat: newLat, lng: newLng };
       handleMapCoordsChange();
     }
   }
@@ -87,7 +93,8 @@ export const Map = ({
       },
       center: center,
       zoom: initialZoom,
-      attributionControl: false
+      attributionControl: false,
+      dragRotate: false
     });
     const map = mapRef.current;
     const coords = map.getCenter();
@@ -98,7 +105,7 @@ export const Map = ({
         enableHighAccuracy: true
       },
       trackUserLocation: true
-    }));
+    }), 'top-left');
 
     map.on('load', () => {
       if (loading) {
@@ -126,6 +133,18 @@ export const Map = ({
     }
   }
 
+  const addLayerSpinner = () => {
+    setMapLoading(true);
+    mapRef.current.on('render', stopSpinner);
+  }
+
+  const stopSpinner = (e) => {
+    if (e.target && e.target.loaded()) {
+      setMapLoading(false);
+      mapRef.current.off('render', stopSpinner)
+    }
+  }
+
   useEffect(() => {
     // If user's gps isn't set in 5 sec, call handleNoUserGps() once
     timeoutRef.current = setTimeout(handleNoUserGps, 5000);
@@ -137,7 +156,7 @@ export const Map = ({
     }
     if (!mapRef.current) {
       setUpMap();
-    } else if (isOverThreshold(mapCoords.current.lat, latitude) || isOverThreshold(mapCoords.current.lng, longitude)) {
+    } else if (isOverThreshold(prevUserGps.current.latitude, latitude) || isOverThreshold(prevUserGps.current.longitude, longitude)) {
       const map = mapRef.current;
       map.jumpTo({
         center: [longitude, latitude],
@@ -146,6 +165,7 @@ export const Map = ({
       mapCoords.current = { lat: latitude.toFixed(6), lng: longitude.toFixed(6) };
       handleMapCoordsChange();
     }
+    prevUserGps.current = { latitude, longitude };
   }, [latitude, longitude]);
 
   useEffect(() => {
@@ -234,13 +254,18 @@ export const Map = ({
   }, [data, day, time]);
 
   const wrapperStyle = {
-    height: '700px'
+    height: '700px',
+    width: '100%'
   };
 
   return (
     <div className="Fade">
       <div className="contentWrapper">
         <div style={wrapperStyle} ref={mapContainerRef} className='mapContainer'/>
+          {mapLoading ?
+            <div className="loaderContainer">
+              <i className="loader" />
+            </div> : null}
       </div>
     </div>
   )

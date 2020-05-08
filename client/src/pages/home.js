@@ -100,7 +100,7 @@ const getLocations = (category, latitude, longitude) => {
 export default function Home() {
   useEffect(() => {
     analytics.ga("send", "pageview", "/");
-  });
+  }, []);
   const [loading, setLoading] = useState(true);
   const allData = useRef([]);
   const [data, setData] = useState({ locations: [] });
@@ -188,6 +188,13 @@ export default function Home() {
       mapCoords.current.lat,
       mapCoords.current.lng
     );
+    if (query && query !== '') {
+      analytics.event({
+        category: 'action',
+        action: 'search',
+        value: query,
+      });
+    }
     if (!result) {
       setSearchLoading(false);
       return;
@@ -335,7 +342,7 @@ export default function Home() {
         <div className="container">
           <div className="searchWrapper">
             <input
-              placeholder={searchLoading ? "" : "Search"}
+              placeholder={searchLoading ? "" : "Search places or addresses"}
               disabled={searchLoading}
               value={searchText}
               onChange={handleChangeText}
@@ -351,8 +358,8 @@ export default function Home() {
                 <i className="loader" />
               </div>
             )}
-            <button onClick={handleSearch} disabled={searchLoading}>
-              {searchLoading ? (
+            <button onClick={handleSearch} disabled={searchLoading || categoryLoading}>
+              {searchLoading || categoryLoading ? (
                 <img src={SearchDisabledIcon} />
               ) : (
                 <img src={SearchIcon} />
@@ -365,6 +372,8 @@ export default function Home() {
               <button
                 onClick={() => handleCategoryChange(item.val)}
                 key={index}
+                disabled={categoryLoading || searchLoading}
+                title={item.name}
               >
                 {category.current === item.val && categoryLoading ? (
                   <div className="loaderContainer">
@@ -388,7 +397,7 @@ export default function Home() {
                 className="day"
                 onClick={(event) => setDayAnchorEl(event.currentTarget)}
               >
-                When
+                When:{" " + days[day + 1].name}
                 <img src={ToggleIcon} />
               </button>
               <Menu
@@ -420,7 +429,7 @@ export default function Home() {
                 className="time"
                 onClick={(event) => setTimeAnchorEl(event.currentTarget)}
               >
-                Time
+                Time:{" " + (time ? times[time].name : 'N/A')}
                 <img src={ToggleIcon} />
               </button>
               <Menu

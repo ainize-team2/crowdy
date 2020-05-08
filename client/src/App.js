@@ -10,13 +10,29 @@ import GitHubIcon from "./images/icon-git-hub.svg";
 import AinizeIcon from "./images/icon-ainize.svg";
 
 import "./styles/main.css";
+import analytics from "./analytics";
 
 export default function App() {
+  const onClickAinizeLink = () => {
+    analytics.event({
+      category: 'link',
+      action: 'ainize',
+    });
+  }
+
+  const onClickGithubLink = () => {
+    analytics.event({
+      category: 'link',
+      action: 'github',
+    });
+  }
   return (
     <React.Fragment>
       <header>
         <div className="container">
-          <h3 className="logo">Crowdy</h3>
+          <a href="/home">
+            <h3 className="logo">Crowdy</h3>
+          </a>
           <div className="menu">
             <a href="/">HOME</a>
             <a href="/about">ABOUT</a>
@@ -31,11 +47,11 @@ export default function App() {
         </Route>
       </Switch>
       <footer>
-        <a className="ainizeLink" target="_blank" href="https://ainize.ai">
+        <a className="ainizeLink"  onClick={onClickAinizeLink} target="_blank" href="https://ainize.ai">
           <img src={AinizeIcon} />
           POWERED BY AINIZE
         </a>
-        <a className="githubLink" target="_blank" href="https://github.com/ainize-team2/crowdy">
+        <a className="githubLink" onClick={onClickGithubLink} target="_blank" href="https://github.com/ainize-team2/crowdy">
           <img src={GitHubIcon} />
           VISIT GITHUB
         </a>

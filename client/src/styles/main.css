@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap");
 
 * {
   font-family: "Montserrat" !important;
@@ -215,6 +215,10 @@ header .menu a:last-child {
   height: 40px;
 }
 
+.map button:disabled {
+  cursor: default !important;
+}
+
 .map .categoryWrapper button:last-child {
   margin: 0;
 }
@@ -265,29 +269,11 @@ header .menu a:last-child {
   text-transform: uppercase;
 }
 
-.about .container {
-  margin-top: 80px;
-  margin-bottom: 350px;
-}
-
-.about .content {
-  padding-bottom: 15px;
-  max-width: 800px;
-}
-
-.about .content:last-child {
-  margin-bottom: 0;
-}
-
-.about .content a {
-  cursor: pointer;
-}
-
 footer {
   padding: 40px 50px;
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  justify-content: center;
   max-width: none;
 }
 
@@ -457,5 +443,9 @@ a:active {
   }
   footer .ainizeLink {
     margin-bottom: 19px;
+  }
+  .map .searchWrapper input {
+    font-size: 16px;
+    line-height: 25px;
   }
 }
