@@ -102,8 +102,10 @@ export default function Home() {
     analytics.ga("send", "pageview", "/");
   }, []);
   const [loading, setLoading] = useState(true);
+  const [mapLoading, setMapLoading] = useState(false);
   const allData = useRef([]);
   const [data, setData] = useState({ locations: [] });
+  const mapRef = useRef(null);
   const mapCoords = useRef({ lat: null, lng: null });
 
   // for snackbar
@@ -122,19 +124,25 @@ export default function Home() {
   const [categoryLoading, setCategoryLoading] = useState(false);
 
   // filter no time data
-  const [excludeNoTimeData, setExcludeNoTimeData] = useState(false);
-
-  useEffect(() => {
-    if (excludeNoTimeData) {
-      setData({ locations: filterDayTime(data.locations) });
-    } else {
-      setData({ locations: JSON.parse(JSON.stringify(allData.current)) });
-    }
-  }, [excludeNoTimeData]);
+  const excludeNoTimeData = useRef(false);
 
   useEffect(() => {
     setData({ locations: filterDayTime(allData.current) });
   }, [day, time]);
+
+  const addLayerSpinner = () => {
+    setMapLoading(true);
+    mapRef.current.on('render', stopSpinner);
+  }
+
+  const stopSpinner = (e) => {
+    if (e.target && e.target.loaded()) {
+      setMapLoading(false);
+      mapRef.current.off('render', stopSpinner)
+    }
+  }
+
+  const disableQuery = () => searchLoading || categoryLoading || !mapRef.current || (mapRef.current && (mapRef.current.isMoving() || mapRef.current.isZooming()));
 
   const handleChangeDay = (event) => {
     setDay(event.target.value);
@@ -171,26 +179,34 @@ export default function Home() {
   };
 
   const handleNoTimeData = () => {
-    setExcludeNoTimeData(!excludeNoTimeData);
+    excludeNoTimeData.current = !excludeNoTimeData.current;
+    if (excludeNoTimeData.current) {
+      setData({ locations: filterDayTime(data.locations) });
+    } else {
+      setData({ locations: JSON.parse(JSON.stringify(allData.current)) });
+    }
   };
 
   const handleSearch = async () => {
+    if (disableQuery()) return;
     setSearchLoading(true);
+    addLayerSpinner();
     const query = searchText;
     category.current = 0;
     setSearchText("");
-    setExcludeNoTimeData(false);
+    excludeNoTimeData.current = false;
     setDay(-1);
     setTime(null);
 
+    const coords = mapRef.current.getCenter();
     const result = await getLocations(
       query,
-      mapCoords.current.lat,
-      mapCoords.current.lng
+      coords.lat.toFixed(6),
+      coords.lng.toFixed(6)
     );
     if (query && query !== '') {
       analytics.event({
-        category: 'action',
+        category: 'spotainize_common',
         action: 'search',
         value: query,
       });
@@ -215,35 +231,40 @@ export default function Home() {
     setSearchLoading(false);
   };
 
-  const handleMapCoordsChange = async () => {
-    await fetchAndFilterData();
+  const handleMapSearch = async (excludeFlag) => {
+    if (disableQuery()) return;
+    addLayerSpinner();
+    await fetchAndFilterData(excludeFlag);
   };
 
   const handleCategoryChange = async (val) => {
+    if (disableQuery()) return;
     category.current = val;
     setCategoryLoading(true);
+    addLayerSpinner();
     await fetchAndFilterData();
     setCategoryLoading(false);
   };
 
-  const fetchAndFilterData = async () => {
-    if (!mapCoords.current.lat || !mapCoords.current.lng) {
+  const fetchAndFilterData = async (excludeFlag = false) => {
+    if (!mapRef.current) {
       return;
     }
+    const coords = mapRef.current.getCenter();
     const promises = [];
     promises.push(
       getLocations(
         categories[category.current].name,
-        mapCoords.current.lat,
-        mapCoords.current.lng
+        coords.lat.toFixed(6),
+        coords.lng.toFixed(6)
       )
     );
     if (category.current === 0) {
       promises.push(
         getLocations(
           "Grocery store",
-          mapCoords.current.lat,
-          mapCoords.current.lng
+          coords.lat.toFixed(6),
+          coords.lng.toFixed(6)
         )
       );
     }
@@ -269,7 +290,7 @@ export default function Home() {
     allData.current = JSON.parse(JSON.stringify(data.locations));
 
     // exclude "no time data" and filter by current day, time settings
-    if (excludeNoTimeData) {
+    if (excludeNoTimeData.current || excludeFlag) {
       data.locations = filterDayTime(data.locations);
     }
 
@@ -277,7 +298,7 @@ export default function Home() {
   };
 
   const filterDayTime = (data) => {
-    if (!excludeNoTimeData) return data;
+    if (!excludeNoTimeData.current) return data;
     if (day === -1) {
       return _.filter(data, (loc) => loc.nowStatus !== "No popular times data");
     } else {
@@ -342,7 +363,7 @@ export default function Home() {
         <div className="container">
           <div className="searchWrapper">
             <input
-              placeholder={searchLoading ? "" : "Search places or addresses"}
+              placeholder={searchLoading ? "" : 'Try "New York grocery stores"'}
               disabled={searchLoading}
               value={searchText}
               onChange={handleChangeText}
@@ -429,7 +450,7 @@ export default function Home() {
                 className="time"
                 onClick={(event) => setTimeAnchorEl(event.currentTarget)}
               >
-                Time:{" " + (time ? times[time].name : 'N/A')}
+                Time{(time ? ": " + times[time].name : "")}
                 <img src={ToggleIcon} />
               </button>
               <Menu
@@ -463,7 +484,7 @@ export default function Home() {
                 <input
                   id="toggleData"
                   type="checkbox"
-                  checked={excludeNoTimeData}
+                  checked={excludeNoTimeData.current}
                   onChange={handleNoTimeData}
                 />
                 <label>Exclude no time data</label>
@@ -481,7 +502,10 @@ export default function Home() {
         mapCoords={mapCoords}
         loading={loading}
         setLoading={setLoading}
-        handleMapCoordsChange={handleMapCoordsChange}
+        mapRef={mapRef}
+        handleMapSearch={handleMapSearch}
+        mapLoading={mapLoading}
+        excludeNoTimeData={excludeNoTimeData}
       />
     </main>
   );

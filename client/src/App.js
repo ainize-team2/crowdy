@@ -15,15 +15,15 @@ import analytics from "./analytics";
 export default function App() {
   const onClickAinizeLink = () => {
     analytics.event({
-      category: 'link',
-      action: 'ainize',
+      category: 'spotainize_common',
+      action: 'poweredby_click',
     });
   }
 
   const onClickGithubLink = () => {
     analytics.event({
-      category: 'link',
-      action: 'github',
+      category: 'spotainize_common',
+      action: 'github_click',
     });
   }
   return (
@@ -47,13 +47,13 @@ export default function App() {
         </Route>
       </Switch>
       <footer>
-        <a className="ainizeLink"  onClick={onClickAinizeLink} target="_blank" href="https://ainize.ai">
+        <a className="ainizeLink"  onClick={onClickAinizeLink} target="_blank" href="https://www.ainize.ai/liayoo/crowdy">
           <img src={AinizeIcon} />
-          POWERED BY AINIZE
+          Powered by Ainize
         </a>
         <a className="githubLink" onClick={onClickGithubLink} target="_blank" href="https://github.com/ainize-team2/crowdy">
           <img src={GitHubIcon} />
-          VISIT GITHUB
+          Contribute on GitHub
         </a>
       </footer>
     </React.Fragment>

@@ -185,6 +185,39 @@
   color: #7586b9;
 }
 
+.mapSearchWrapper {
+  top: 25px;
+  left: 50%;
+  position: absolute;
+}
+
+.mapSearchWrapper div {
+  position: relative;
+  left: -50%;
+  width: 228px;
+  height: 40px;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 28px;
+  color: #6B6A88;
+}
+
+.mapSearchWrapper div:hover {
+  background-color: #ececec;
+}
+
+.mapSearchWrapper div img {
+  margin-right: 8px;
+}
+
 @media screen and (max-width: 663px) {
   .contentWrapper .loaderContainer {
     height: 500px !important;
@@ -195,78 +228,20 @@
   }
 
   .mapboxgl-popup {
-    width: 160px;
-    max-width: 160px !important;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+    width: calc(100% - 20px);
+    max-width: calc(100% - 20px) !important;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+    transform: none !important;
+    top: auto;
+    bottom: 10px;
+    left: 10px;
   }
   
   .mapboxgl-popup-content {
-    width: 160px;
-    padding: 12px;
-  }
-
-  .popup-inner .middle img {
-    width: 9px;
-    height: 8px;
-    margin-right: 2px;
-  }
-
-  .top {
-    padding-bottom: 6px;
-  }
-  
-  .top div:first-child {
-    border-radius: 1px;
-    font-size: 7px;
-    line-height: 10px;
-    padding: 0 3px;
-  }
-
-  .top .live {
-    width: 25px;
-    height: 10px;
-    font-size: 7px;
-    line-height: 10px;
-  }
-  
-  .top .live .dot {
-    width: 4px;
-    height: 4px;
-    border-radius: 5px;
-    margin-right: 2px;
-  }
-  
-  .middle {
-    padding-bottom: 11px;
-  }
-
-  .middle div:first-child {
-    font-size: 12px;
-    line-height: 14px;
-    padding-bottom: 4px;
-  }
-  
-  .middle div:nth-child(2) {
-    font-size: 7px;
-    line-height: 10px;
-    padding-bottom: 5px;
-  }
-  
-  .middle div:last-child {
-    font-size: 7px;
-    line-height: 10px;
-  }
-  
-  .bottom a {
-    font-size: 7px;
-    line-height: 12px;
-  }
-  
-  .bottom a:last-child {
-    margin-left: 22px;
+    width: 100%;
   }
 
   .attribWrapper {
-    font-size: 7px;
+    font-size: 10px;
   }
 }

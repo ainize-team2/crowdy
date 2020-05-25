@@ -11,13 +11,19 @@ import "../styles/about.css";
 export default function Home() {
   const onClickAinizeLink = () => {
     analytics.event({
-      category: 'link',
-      action: 'ainize',
+      category: 'spotainize_common',
+      action: 'poweredby_click',
+    });
+  }
+  const onClickGithubLink = () => {
+    analytics.event({
+      category: 'spotainize_common',
+      action: 'github_click',
     });
   }
   useEffect(() => {
     analytics.ga("send", "pageview", "/about");
-  });
+  }, []);
   return (
     <main>
       <div className="about_hero section">
@@ -51,13 +57,15 @@ export default function Home() {
           <div className="content">
             <h2>How to join</h2>
             <h4>
-              Fork this{" "}
-              <a target="_blank" href="https://github.com/ainize-team2/crowdy">
+              Create a branch and send pull requests to this {" "}
+              <a target="_blank"  onClick={onClickGithubLink} href="https://github.com/ainize-team2/crowdy">
                 Github repo
               </a>{" "}
-              to make your own version of Crowdy, or simply use our location
-              APIs in other interesting projects. And of course, pull requests
-              are always welcome!
+              to make Crowdy better, or simply use our{" "}
+              <a href="https://www.ainize.ai/liayoo/crowdy" onClick={onClickAinizeLink} target="_blank">
+                location APIs
+              </a>{" "}
+               in other interesting projects!
             </h4>
           </div>
         </div>

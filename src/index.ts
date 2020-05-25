@@ -42,8 +42,7 @@ app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // match one above, send back React's index.html file.
 app.get('*', (req, res) => {
   const medium = (req.query.medium) ? String(req.query.medium) : 'ainize';
-  const name = (req.query.name) ? String(req.query.name) : 'ainize';
-  analytics.event('UTM', medium, name, (err) => {
+  analytics.event('spotainize_common', 'utm', medium, (err) => {
     res.sendFile(path.join(`${__dirname}/../client/build/index.html`));
   });
 });

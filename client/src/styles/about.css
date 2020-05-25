@@ -18,12 +18,16 @@
 }
 
 .about_hero h1 {
-  margin-left: 60px;
-  margin-right: 60px;
+  margin: 20px 60px;
+  font-weight: normal;
+}
+
+.about_hero h4 {
+  margin-bottom: 40px;
 }
 
 .about_hero .quote {
-  background-color: rgba(255, 255, 255, 0.95);
+  background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 1));
   padding: 80px 170px 0px 170px;
 }
 
@@ -55,6 +59,10 @@
   padding: 90px 120px 90px 120px;
 }
 
+.about .container h2 {
+  margin-bottom: 20px;
+}
+
 .about a {
   text-decoration: none;
   font-weight: 700;
@@ -71,8 +79,9 @@
   max-width: 900px;
 }
 
-.ainize button {
-  margin-top: 20px;
+.ainize button,
+.ainize button:focus {
+  margin-top: 40px;
   width: 200px;
   height: 60px;
   background-color: #1a1b1f !important;
@@ -81,12 +90,11 @@
 }
 
 .ainize button:hover {
-  opacity: 0.9;
+  background-color: #854cff !important;
 }
 
-.ainize button:active,
-.ainize button:focus {
-  background-color: #1a1b1f !important;
+.ainize button:active {
+  background-color: #6535cc !important;
 }
 
 @media screen and (max-width: 1088px) {
@@ -110,10 +118,10 @@
     padding: 50px 20px 0px 20px;
   }
   .about .container {
-    padding: 60px 20px 60px 20px;
+    padding: 100px 15px 0;
   }
   .about .container:last-child {
-    padding: 0px 20px 60px 20px;
+    padding: 100px 15px;
   }
   .about_hero .quote {
     padding: 40px 80px 0px 80px;
@@ -127,9 +135,9 @@
     width: 40px;
   }
   .ainize button {
-    width: 130px;
-    height: 35px;
-    font-size: 9px;
+    width: 201px;
+    height: 60px;
+    font-size: 16px;
   }
   .ainize .container {
     padding: 60px;
@@ -138,23 +146,44 @@
 
 @media screen and (max-width: 487px) {
   .about_hero h1 {
-    font-size: 25px;
-    line-height: 35px;
+    font-size: 40px;
+    line-height: 56px;
+  }
+
+  .about h4, .ainize h4 {
+    font-size: 16px;
+    line-height: 28px;
   }
 }
 
 @media screen and (max-width: 460px) {
-  .about_hero .container {
-    padding: 40px 20px 0px 20px;
+  .about_hero, .ainize {
+    margin: 0 !important;
   }
-  .about_hero .quote h3 {
-    font-size: 12px;
-    line-height: 20px;
+  .about_hero .container {
+    padding: 60px 0 0;
+    background-position-y: -150px;
+  }
+  .about_hero .content h4 {
+    padding: 0 15px;
   }
   .about_hero .quote {
-    padding: 40px 55px 0px 55px;
+    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 1),rgba(255, 255, 255, 1));
+  }
+  .about_hero .quote h3 {
+    font-size: 20px;
+    line-height: 30px;
+  }
+  .about_hero .quote h4 {
+    font-size: 16px;
+    line-height: 28px;
+    margin-top: 16px;
+    margin-bottom: 20px;
+  }
+  .about_hero .quote {
+    padding: 60px 15px 2px 15px;
   }
   .ainize .container {
-    padding: 40px;
+    padding: 100px 15px;
   }
 }

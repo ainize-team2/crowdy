@@ -6,8 +6,8 @@ ReactGA.initialize(trackingId);
 
 setTimeout(() => {
   ReactGA.event({
-    category: 'Used',
-    action: '30s'
+    category: 'spotainize_common',
+    action: 'used_30s'
   })
 }, CHECK_USE_TIME);
 

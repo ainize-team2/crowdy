@@ -282,13 +282,15 @@ footer a {
   display: flex;
   flex-direction: row;
   margin-right: 20px;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 20px;
   text-decoration: none;
+  color: #8E8E94 !important;
 }
 
 footer a:hover {
   text-decoration: none;
-  color: #1a1b1f;
 }
 footer a img {
   margin-right: 8px;
@@ -306,6 +308,8 @@ h2 {
   font-size: 36px;
   line-height: 50px;
   font-weight: 400;
+  margin-top: 0;
+  margin-bottom: 10px;
 }
 
 h3 {
@@ -321,6 +325,7 @@ h4 {
   line-height: 28px;
   font-weight: 400;
   opacity: 0.6;
+  margin: 0;
 }
 
 p {
@@ -353,8 +358,8 @@ a:active {
   }
 
   h2 {
-    font-size: 29px;
-    line-height: 40px;
+    font-size: 32px;
+    line-height: 44px;
     font-weight: 400;
   }
 }
@@ -388,18 +393,24 @@ a:active {
 }
 
 @media screen and (max-width: 663px) {
+  .hero .container {
+    margin-top: 60px;
+  }
   h1 {
-    font-size: 28px;
-    line-height: 40px;
+    font-size: 40px;
+    line-height: 56px;
     font-weight: 500;
+    text-align: center;
   }
   h2 {
-    font-size: 14px;
-    line-height: 25px;
+    font-size: 30px;
+    line-height: 40px;
+    text-align: center;
   }
   h4 {
-    font-size: 10px;
-    line-height: 14px;
+    font-size: 14px;
+    line-height: 26px;
+    text-align: center;
   }
   .map .searchWrapper,
   .map .categoryWrapper {
@@ -440,6 +451,8 @@ a:active {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    font-size: 12px;
+    line-height: 20px;
   }
   footer .ainizeLink {
     margin-bottom: 19px;

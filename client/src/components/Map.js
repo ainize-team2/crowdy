@@ -3,26 +3,31 @@ import { usePosition } from "use-position";
 import mapboxgl from 'mapbox-gl';
 import { point, center, featureCollection, distance } from '@turf/turf';
 import getInfoFromNowStatus from '../getInfoFromNowStatus';
-import { debounce } from 'lodash';
 
 import '../styles/map.css';
 
 import analytics from '../analytics';
 
-const DEFAULT_COORDS_LAT = 37.5866022;
-const DEFAULT_COORDS_LNG = 126.972618;
+const DEFAULT_COORDS_LAT = 40.747738;
+const DEFAULT_COORDS_LNG = -73.986894;
 const THRESHOLD = 0.01;
 
-const copyrightEl = () => {
-  const el = document.createElement('div');
-  el.className = 'attribWrapper';
-  el.innerHTML = `
+const copyrightEl = `
+<div class="attribWrapper">
   &copy; <a href="https://www.mapbox.com/about/maps/">Mapbox</a>
   &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors
   <a href="https://www.mapbox.com/map-feedback/#/-74.5/40/10">Improve this map</a>
-  `;
-  return el;
-}
+</div>
+`;
+
+const searchEl = `
+<div class="mapSearchWrapper">
+  <div class="mapSearch">
+    <img src="${process.env.PUBLIC_URL}/icon-search-map.svg" width="16" height="16" />
+    Search current location
+  </div>
+</div>
+`;
 
 const isOverThreshold = (a, b) => {
  return Math.abs(Number(a) - Number(b)) > THRESHOLD;
@@ -35,33 +40,17 @@ export const Map = ({
   mapCoords,
   loading,
   setLoading,
-  handleMapCoordsChange,
+  mapRef,
+  handleMapSearch,
+  mapLoading,
+  excludeNoTimeData
 }) => {
   const initialZoom = 15;
   const markers = useRef([]);
-  const mapRef = useRef(null);
   const mapContainerRef = useRef(null);
   const { latitude, longitude, error } = usePosition(false);
   const prevUserGps = useRef({ latitude, longitude });
   const timeoutRef = useRef(null);
-  const [mapLoading, setMapLoading] = useState(false);
-
-  const moveEndHandler = (event) => {
-    const coords = mapRef.current.getCenter();
-    const newLat = coords.lat.toFixed(6);
-    const newLng = coords.lng.toFixed(6)
-    if (!event.originalEvent && !event.geolocateSource) {
-      // ignore moveend events triggered by 'flyTo' or 'fitBounds'
-      mapCoords.current = { lat: newLat, lng: newLng };
-      return;
-    } else if (isOverThreshold(mapCoords.current.lat, newLat) || isOverThreshold(mapCoords.current.lng, newLng)) {
-      addLayerSpinner();
-      mapCoords.current = { lat: newLat, lng: newLng };
-      handleMapCoordsChange();
-    }
-  }
-
-  const debounceMoveEndHandler = debounce(moveEndHandler, 2000, { leading: false, trailing: true });
 
   const setUpMap = () => {
     if (timeoutRef.current) {
@@ -107,14 +96,16 @@ export const Map = ({
       trackUserLocation: true
     }), 'top-left');
 
+    map.addControl(new mapboxgl.NavigationControl({showCompass: false}), 'top-left');
+
     map.on('load', () => {
       if (loading) {
         setLoading(false);
-        document.getElementsByClassName('mapContainer')[0].insertAdjacentElement('afterbegin', copyrightEl());
+        document.getElementsByClassName('mapContainer')[0].insertAdjacentHTML('afterbegin', copyrightEl);
+        document.getElementsByClassName('mapContainer')[0].insertAdjacentHTML('afterbegin', searchEl);
+        document.getElementsByClassName('mapSearch')[0].addEventListener("click", () => handleMapSearch(excludeNoTimeData));
       }
     });
-    
-    map.on('moveend', debounceMoveEndHandler);
 
     map.on("wheel", event => {
       // avoid zooming when user is scrolling the page
@@ -124,24 +115,12 @@ export const Map = ({
       event.preventDefault();
     });
 
-    handleMapCoordsChange();
+    handleMapSearch();
   }
 
   const handleNoUserGps = () => {
     if (!mapRef.current && (!latitude || !longitude)) {
       setUpMap();
-    }
-  }
-
-  const addLayerSpinner = () => {
-    setMapLoading(true);
-    mapRef.current.on('render', stopSpinner);
-  }
-
-  const stopSpinner = (e) => {
-    if (e.target && e.target.loaded()) {
-      setMapLoading(false);
-      mapRef.current.off('render', stopSpinner)
     }
   }
 
@@ -163,7 +142,7 @@ export const Map = ({
         zoom: initialZoom
       });
       mapCoords.current = { lat: latitude.toFixed(6), lng: longitude.toFixed(6) };
-      handleMapCoordsChange();
+      handleMapSearch();
     }
     prevUserGps.current = { latitude, longitude };
   }, [latitude, longitude]);
@@ -211,14 +190,14 @@ export const Map = ({
           </div>`;
         popupEl.getElementsByClassName('view')[0].onclick = () => { 
           analytics.event({
-            category: 'link',
-            action: 'Map View',
+            category: 'spotainize_common',
+            action: 'map_view_click',
           });
         }
         popupEl.getElementsByClassName('directions')[0].onclick = () => { 
           analytics.event({
-            category: 'link',
-            action: 'Map Directions',
+            category: 'spotainize_common',
+            action: 'map_directions_click',
           });
         }
         const popup = new mapboxgl.Popup({ offset: 25, closeButton: false })
