@@ -5,7 +5,6 @@ import YAML from 'yamljs';
 import swaggerUi from 'swagger-ui-express';
 import GoogleMap from './util/googleMap';
 import Logger from './common/logger';
-import analytics from './util/ga';
 
 const swaggerDocument = YAML.load('./swagger.yaml');
 const log = Logger.createLogger('index');
@@ -41,10 +40,7 @@ app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.get('*', (req, res) => {
-  const medium = (req.query.medium) ? String(req.query.medium) : 'ainize';
-  analytics.event('spotainize_common', 'utm', medium, (err) => {
-    res.sendFile(path.join(`${__dirname}/../client/build/index.html`));
-  });
+  res.sendFile(path.join(`${__dirname}/../client/build/index.html`));
 });
 
 

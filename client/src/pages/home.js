@@ -207,7 +207,7 @@ export default function Home() {
     if (query && query !== '') {
       analytics.event({
         category: 'spotainize_common',
-        action: 'search',
+        action: 'search_button_click',
         value: query,
       });
     }
