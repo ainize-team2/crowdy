@@ -3,7 +3,7 @@ info:
   title: Crowdy Project
   version: 1.0.0
 servers: 
-  - url: https://crowdy.liayoo.endpoint.ainize.ai
+  - url: https://master-crowdy-ainize-team2.endpoint.ainize.ai
 
 paths:
   /healthz:
